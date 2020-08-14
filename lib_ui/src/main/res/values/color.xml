@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray_bg">#f4f4f4</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="red">#DF2826</color>
+    <color name="red_shadow">#FDF4ED</color>
+    <color name="grayText">#999999</color>
+
+    <color name="black">#111111</color>
+    <color name="black_title_color">#333333</color>
+    <color name="black_title_color_second">#666666</color>
+
+    <color name="gray_line">#dddddd</color>
+    <color name="main_tab_gray_text_color">#292929</color>
+
+    <color name="item_touch_color">#FFE5E5E5</color>
+    <color name="item_touch_color_default">#FFFFFF</color>
+
+    <color name="gray_deep">#404751</color>
+
+    <color name="green">#0076FE</color>
+
+    <color name="yellowText">#F07903</color>
+
+    <color name="tran">#55000000</color>
+    <color name="rule_color">#6f1200</color>
+    <color name="spike_tab">#FFC7C8</color>
+
+</resources>

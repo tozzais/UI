@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="public_height_830px">830px</dimen>
+    <dimen name="public_height_16px">16px</dimen>
+
+
+    <dimen name="statusbar_view_height">0dp</dimen>
+    <dimen name="statusbar_view_height_and_toolbar">0dp</dimen>
+    <dimen name="dimen_20">12dp</dimen>
+    <dimen name="dimen_12">12dp</dimen>
+    <dimen name="dimen_8">8dp</dimen>
+</resources>
