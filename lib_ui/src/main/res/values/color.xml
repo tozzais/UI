@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray_bg">#f4f4f4</color>
+    <!-- 项目的主色调 -->
+    <color name="baseColor">#DF2826</color>
+    <!-- 白色-->
     <color name="white">#FFFFFF</color>
+    <!-- 黑色-->
+    <color name="black">#000000</color>
+    <!-- 蓝色-->
+    <color name="blue">#0000ff</color>
+    <!-- 青色-->
+    <color name="cyan">#00ffff</color>
+    <!-- 深灰色 dk == Dark深色  -->
+    <color name="gray_dk">#444444</color>
+    <!-- 灰色-->
+    <color name="gray">#888888</color>
+    <!-- 绿色-->
+    <color name="green">#00ff00</color>
+    <!-- 浅灰色 LT == Light浅色 -->
+    <color name="gray_lt">#cccccc</color>
+    <!-- 品红-->
+    <color name="magenta">#ff00ff</color>
+    <!-- 红色-->
+    <color name="red">#ff0000</color>
+    <!-- 透明色-->
+     <color name="transparent">#00000000</color>
+    <!-- 黄色-->
+    <color name="yellow">#ffff00</color>
 
 
-    <color name="red">#DF2826</color>
+
+    <color name="gray_bg">#f4f4f4</color>
     <color name="red_shadow">#FDF4ED</color>
     <color name="grayText">#999999</color>
-
-    <color name="black">#111111</color>
     <color name="black_title_color">#333333</color>
     <color name="black_title_color_second">#666666</color>
-
     <color name="gray_line">#dddddd</color>
     <color name="main_tab_gray_text_color">#292929</color>
-
     <color name="item_touch_color">#FFE5E5E5</color>
     <color name="item_touch_color_default">#FFFFFF</color>
-
     <color name="gray_deep">#404751</color>
-
-    <color name="green">#0076FE</color>
-
     <color name="yellowText">#F07903</color>
-
     <color name="tran">#55000000</color>
     <color name="rule_color">#6f1200</color>
     <color name="spike_tab">#FFC7C8</color>
