@@ -4,10 +4,9 @@ package com.example.ui;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.gc.ui.ui.BaseActivity;
+import com.gc.common.ui.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {

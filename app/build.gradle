@@ -37,6 +37,6 @@ dependencies {
 
     //使用ui框架需要添加的
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-    implementation project(path: ':lib_ui')
+    implementation project(path: ':lib_common')
 
 }
