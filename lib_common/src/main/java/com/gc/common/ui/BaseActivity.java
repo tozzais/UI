@@ -30,41 +30,80 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<T> extends AppCompatActivity {
 
+
+
+    /**
+     *  下面的控件都是最底层布局中控件。如果重写 getBaseLayout() 方法 这些控件则为空
+     */
+    private ProgressLayout progress_layout;
+    private View line;
     private Toolbar mToolbar;
     private TextView mTitle;
-    private ProgressLayout progress_layout;
     private TextView tv_right;
     private ImageView iv_right_icon;
-    private View line;
-
-    protected boolean isLoad = false;
-
 
     protected Context mContext;
     protected Activity mActivity;
-
-
+    /**
+     * 页面是否加载
+     */
+    protected boolean isLoad = false;
 
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(getBaseLayout());
-
-        line = findViewById(R.id.line);
         //设置只能屏幕方向
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         mContext = this;
         mActivity = this;
+        //初始化 最底层view
+        initBaseView();
+        //初始化 标题栏view
+        initToolBarView();
+        //初始化 内容view
+        initContentView();
 
+        EventBus.getDefault().register(this);
+        ButterKnife.bind(this);
+
+        initView(savedInstanceState);
+        loadData();
+        initListener();
+    }
+
+    protected int getBaseLayout() {
+        return R.layout.base_activity;
+    }
+
+    protected int getToolbarLayout() {
+        return R.layout.base_toolbar;
+    }
+
+
+    public abstract int getLayoutId();
+
+    public abstract void initView(Bundle savedInstanceState);
+
+    public abstract void loadData();
+
+
+
+    /**
+     * 初始化 最底层view
+     */
+    private  void  initBaseView(){
         progress_layout = findViewById(R.id.progress_layout);
+        line = findViewById(R.id.line);
+    }
+
+    /**
+     * 初始化 标题栏view
+     */
+    private  void  initToolBarView(){
         AppBarLayout mHeaderView = findViewById(R.id.layout_header);
-        FrameLayout mFlContainer = findViewById(R.id.content_container);
-
-
         int toolbarLayoutRes = getToolbarLayout();
         if (toolbarLayoutRes >= 0 && mHeaderView != null) {
             //添加toolbar
@@ -73,19 +112,16 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         } else if (mHeaderView != null) {
             mHeaderView.setVisibility(View.GONE);
         }
-        //内容View
-        if (mFlContainer != null && getLayoutId() != -1)
-            mFlContainer.addView(LayoutInflater.from(mContext).inflate(getLayoutId(), mHeaderView, false));
+    }
 
-        EventBus.getDefault().register(this);
-        ButterKnife.bind(this);
-
-
-        initView(savedInstanceState);
-
-        loadData();
-        initListener();
-
+    /**
+     * 初始化 内容view
+     */
+    private void initContentView(){
+        FrameLayout mFlContainer = findViewById(R.id.content_container);
+        int layoutId = getLayoutId();
+        if (mFlContainer != null && layoutId != -1)
+            mFlContainer.addView(LayoutInflater.from(mContext).inflate(layoutId, mFlContainer, false));
 
     }
 
@@ -123,13 +159,9 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         StatusBarUtil.setLightMode(this);
     }
 
-    protected int getBaseLayout() {
-        return R.layout.base_activity;
-    }
 
-    protected int getToolbarLayout() {
-        return R.layout.base_toolbar;
-    }
+
+
 
     /**
      * 初始化 标题栏 只能内部调用
@@ -158,11 +190,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
 
 
 
-    public abstract int getLayoutId();
 
-    public abstract void initView(Bundle savedInstanceState);
-
-    public abstract void loadData();
 
 
     public  void initListener() {};
@@ -217,7 +245,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
 
     }
 
-    protected void tsg(String str) {  //封装弹出框提示
+    protected void tsg(String str) {
 
         ToastCommom.createToastConfig().ToastShow(mContext, str);
     }
@@ -242,6 +270,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         if (progress_layout != null)
         progress_layout.showError(message, view -> loadData());
     }
+
 
 
 
