@@ -24,13 +24,18 @@ import butterknife.Unbinder;
  * Created by jumpbox on 16/4/7.
  */
 public abstract class BaseFragment<T> extends DialogFragment {
-    protected boolean isInit = false; //是否初始化
-    protected boolean isLoad = false; //是否加载完成
+
     protected Activity mActivity;
+    /**
+     * 下面的控件都是最底层布局中控件。如果重写 getBaseLayout() 方法 这些控件则为空
+     */
     public View mRootView;
     protected RelativeLayout mHeaderView;
     protected FrameLayout mContainerView;
     protected ProgressLayout progress_layout;
+
+    protected boolean isInit = false; //是否初始化
+    protected boolean isLoad = false; //是否加载完成
     private Unbinder unbinder;
 
     @Override

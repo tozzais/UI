@@ -26,12 +26,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-
+/**
+ *  Created by xmm on 2020/08/21.
+ *  成员变量
+ *  重写的方法
+ *  自定义的方法
+ * @param <T>
+ */
 public abstract class BaseActivity<T> extends AppCompatActivity {
 
-
-
+    protected Context mContext;
+    protected Activity mActivity;
     /**
      *  下面的控件都是最底层布局中控件。如果重写 getBaseLayout() 方法 这些控件则为空
      */
@@ -41,14 +48,12 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     private TextView mTitle;
     private TextView tv_right;
     private ImageView iv_right_icon;
-
-    protected Context mContext;
-    protected Activity mActivity;
     /**
      * 页面是否加载
      */
     protected boolean isLoad = false;
 
+    private Unbinder butterKnifeBind;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -65,13 +70,38 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         initToolBarView();
         //初始化 内容view
         initContentView();
-
+        //第三方的舒适化
         EventBus.getDefault().register(this);
-        ButterKnife.bind(this);
-
+        butterKnifeBind = ButterKnife.bind(this);
+        //提取抽象 方法
         initView(savedInstanceState);
         loadData();
         initListener();
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        setStatusBar();
+    }
+
+    @Override
+    public void onBackPressed() {
+        back();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        if (butterKnifeBind != null)
+            butterKnifeBind.unbind();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(T t) {
+
     }
 
     protected int getBaseLayout() {
@@ -89,7 +119,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
 
     public abstract void loadData();
 
-
+    public  void initListener() {}
 
     /**
      * 初始化 最底层view
@@ -125,43 +155,28 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
 
     }
 
-    protected void setLineVisibility(){
-        line.setVisibility(View.VISIBLE);
+    /**
+     * 设置标题 栏到内容的线是否可见
+     */
+    protected void setLineVisibility(int visibility){
+        line.setVisibility(visibility);
     }
 
-
-
+    /**
+     * 重写返回按钮
+     */
     public void back(){
         finish();
     }
-    @Override
-    public void onBackPressed() {
-//        LogUtil.e("onBackPressed");
-        back();
-    }
 
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        setStatusBar();
-    }
-
-
+    /**
+     * 设置状态栏样式
+     */
     protected void setStatusBar() {
         int mColor = getResources().getColor(R.color.white);
         StatusBarUtil.setColor(this, mColor, 0);
         StatusBarUtil.setLightMode(this);
     }
-
-    protected void setStatusBar(int tag) {
-        int mColor = getResources().getColor(R.color.white);
-        StatusBarUtil.setColor(this, mColor, 0);
-        StatusBarUtil.setLightMode(this);
-    }
-
-
-
-
 
     /**
      * 初始化 标题栏 只能内部调用
@@ -178,7 +193,6 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
             tv_right = findViewById(R.id.tv_right);
             iv_right_icon = findViewById(R.id.iv_right_icon);
             mTitle.setText(title);
-
             if (isCanBack) {
                 mToolbar.setNavigationIcon(R.mipmap.back);
                 mToolbar.setNavigationOnClickListener(view -> back());
@@ -188,32 +202,21 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-    public  void initListener() {};
-
     public void setBackTitle(String title) {
         initToolbar(title, true);
     }
-
     public void setBackTitle(int title) {
         initToolbar(getResources().getString(title), true);
     }
-
     public void setNotBackTitle(String title) {
         initToolbar(title, false);
     }
-
     public void setRightIcon(int res) {
         if (iv_right_icon != null) {
             iv_right_icon.setVisibility(View.VISIBLE);
             iv_right_icon.setImageResource(res);
         }
     }
-
     public void setRightText(String res) {
         if (tv_right != null) {
             tv_right.setVisibility(View.VISIBLE);
@@ -233,24 +236,12 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(T t) {
-
-    }
 
     protected void tsg(String str) {
-
         ToastCommom.createToastConfig().ToastShow(mContext, str);
     }
 
-    protected void showProress() {
+    protected void showProgress() {
         if (progress_layout != null)
         progress_layout.showLoading();
     }
