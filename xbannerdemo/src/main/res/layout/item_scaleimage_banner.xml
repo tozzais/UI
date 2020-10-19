@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+
+    <com.xmm.xbannerdemo.ScaleImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        app:scale="0.44854881"
+        android:scaleType="centerCrop"
+        android:layout_height="0dp"
+        android:src="@mipmap/product2"
+        />
+
+
+
+</RelativeLayout>
